@@ -1,6 +1,8 @@
 ﻿using Common.Extensions;
 using Core.CacheManager.Abstract;
 using Core.CacheManager.Concrete;
+using Core.MessageBroker.Abstract;
+using Core.MessageBroker.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using SimpleInjector;
@@ -28,6 +30,7 @@ namespace Reader
 
             _container.Register<IConfigDal, MongoConfigDal>();
             _container.Register<ICacheManager<string>, RedisCacheManager<string>>();
+            _container.Register<IMessageBroker, RabbitMQMessageBroker>();
             _container.Verify();
         }
 
