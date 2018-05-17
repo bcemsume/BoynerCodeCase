@@ -22,7 +22,7 @@ namespace Test
 
         public Test()
         {
-            
+
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace Test
         {
             var reader = new ConfigurationReader("", "", 1);
 
-            reader.Get();
+            var result = reader.GetValue<string>("test");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.CacheManager.Abstract;
+﻿using Common.Extensions;
+using Core.CacheManager.Abstract;
 using Core.CacheManager.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
@@ -10,7 +11,7 @@ using System.Text;
 namespace Reader
 {
     
-    public class ConfigurationReader
+    public class ConfigurationReader : IConfigurationReader
     {
         private string _applicationName;
         private string _connectionString;
@@ -30,13 +31,16 @@ namespace Reader
             _container.Verify();
         }
 
-        public void Get()
+
+        public T GetValue<T>(string key)
         {
             var redis = _container.GetInstance<ICacheManager<string>>();
 
             redis.SetValue("test123123");
 
-           var value =  redis.GetValue("test");
+            var value = redis.GetValue("test");
+
+            return value.Conversion<T>();
         }
     }
 }
