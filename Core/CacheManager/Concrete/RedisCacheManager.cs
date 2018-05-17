@@ -20,6 +20,7 @@ namespace Core.CacheManager.Concrete
         }
         public T GetValue(string key)
         {
+            var res = _database.StringGet(key);
             return _database.StringGet(key).ConvertValue<T>();
         }
 
@@ -31,7 +32,7 @@ namespace Core.CacheManager.Concrete
 
         public void SetValue(string key)
         {
-            throw new NotImplementedException();
+            _database.SetAdd("test", key);
         }
 
         public Task SetValueAsync(string key)

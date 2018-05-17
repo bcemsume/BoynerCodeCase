@@ -3,13 +3,14 @@ using DataAccess.Concrete;
 using Entities.Concrete;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Reader;
 using Service;
 using System.Threading.Tasks;
 
 namespace Test
 {
     [TestClass]
-    public class UnitTest1
+    public class Test
     {
         const string Name = "SiteName";
         const string Type = "String";
@@ -19,7 +20,7 @@ namespace Test
 
 
 
-        public UnitTest1()
+        public Test()
         {
             
         }
@@ -62,6 +63,14 @@ namespace Test
 
             repository.Verify(x => x.AddAsync(config));
 
+        }
+
+        [TestMethod]
+        public void ReaderTest()
+        {
+            var reader = new ConfigurationReader("", "", 1);
+
+            reader.Get();
         }
     }
 }

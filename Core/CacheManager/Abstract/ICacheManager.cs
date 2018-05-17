@@ -7,7 +7,13 @@ namespace Core.CacheManager.Abstract
 {
     public interface ICacheManager<T>
     {
-       
+        T GetValue(string key);
+
+        Task<T> GetValueAsync(string key);
+
+        void SetValue(string key);
+
+        Task SetValueAsync(string key);
 
     }
 }

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{72ADBD40-C79A-4DE9-9FE5-71BD5081C507}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationReader", "ConfigurationReader\ConfigurationReader.csproj", "{FAD513E4-297A-4885-BD7B-2F66A4864687}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader", "ConfigurationReader\Reader.csproj", "{FAD513E4-297A-4885-BD7B-2F66A4864687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

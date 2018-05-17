@@ -11,22 +11,25 @@ namespace Core.CacheManager.Concrete
     {
         private static readonly Lazy<ConnectionMultiplexer> Connection;
 
-        private static readonly string REDIS_CONNECTIONSTRING = "redis://51.15.81.157:6379";
+        private static readonly string REDIS_CONNECTIONSTRING = "51.15.81.157:6379";
 
         static RedisConnectionFactory()
         {
-            var config = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .Build();
+            //var config = new ConfigurationBuilder()
+            //    .AddEnvironmentVariables()
+            //    .Build();
 
-            var connectionString = config[REDIS_CONNECTIONSTRING];
+            //var connectionString = config[REDIS_CONNECTIONSTRING];
 
-            if (connectionString == null)
-            {
-                throw new KeyNotFoundException($"Environment variable for {REDIS_CONNECTIONSTRING} was not found.");
-            }
+            //if (connectionString == null)
+            //{
+            //    throw new KeyNotFoundException($"Environment variable for {REDIS_CONNECTIONSTRING} was not found.");
+            //}
 
-            var options = ConfigurationOptions.Parse(connectionString);
+            var options = ConfigurationOptions.Parse(REDIS_CONNECTIONSTRING);
+            options.AbortOnConnectFail = false;
+            options.ResponseTimeout = int.MaxValue;
+            options.SyncTimeout = int.MaxValue;
 
             Connection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(options));
         }
