@@ -6,6 +6,9 @@ using Moq;
 using Reader;
 using Service;
 using System.Threading.Tasks;
+using SimpleInjector;
+using Core.MessageBroker.Abstract;
+using Core.MessageBroker.Concrete;
 
 namespace Test
 {
@@ -71,6 +74,20 @@ namespace Test
             var reader = new ConfigurationReader("", "", 1);
 
             var result = reader.GetValue<string>("test");
+        }
+
+        [TestMethod]
+        public void MQPublishTest()
+        {
+            var container = new Container();
+            container.Register<IMessageBroker, RabbitMQMessageBroker>();
+
+            container.Verify();
+
+            var messageBroker = container.GetInstance<IMessageBroker>();
+
+            messageBroker.Publisher("test", "mesaj");
+
         }
     }
 }

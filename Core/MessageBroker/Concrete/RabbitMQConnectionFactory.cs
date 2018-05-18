@@ -7,14 +7,21 @@ namespace Core.MessageBroker.Concrete
 {
     public class RabbitMQConnectionFactory
     {
-        private readonly string _hostName = @"https://hound.rmq.cloudamqp.com/";
+        private readonly string _hostName = @"amqp://51.15.81.157:5672/";
 
         public IConnection GetRabbitMQConnection()
         {
             ConnectionFactory connectionFactory = new ConnectionFactory()
             {
-                HostName = _hostName
+                Uri = new Uri(_hostName),
+                Password = "guest",
+                UserName = "guest",
+                //VirtualHost = "/",
+                //Port = AmqpTcpEndpoint.UseDefaultPort,
+                //HostName = "51.15.81.157"
             };
+
+            //connectionFactory.RequestedHeartbeat
 
             return connectionFactory.CreateConnection();
         }
