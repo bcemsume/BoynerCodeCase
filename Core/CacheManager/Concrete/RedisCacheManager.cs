@@ -30,7 +30,7 @@ namespace Core.CacheManager.Concrete
 
         public void SetValue(string value)
         {
-            _database.SetAdd("test", value);
+            _database.StringSet("test", value);
         }
 
         public Task SetValueAsync(string value)
