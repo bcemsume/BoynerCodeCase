@@ -11,9 +11,9 @@ namespace Core.CacheManager.Abstract
 
         Task<object> GetValueAsync(string key);
 
-        void SetValue(string key);
+        void SetValue(string value);
 
-        Task SetValueAsync(string key);
+        Task SetValueAsync(string value);
 
     }
 }
