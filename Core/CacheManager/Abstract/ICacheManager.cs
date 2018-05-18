@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Core.CacheManager.Abstract
 {
-    public interface ICacheManager<T>
+    public interface ICacheManager
     {
-        T GetValue(string key);
+        object GetValue(string key);
 
-        Task<T> GetValueAsync(string key);
+        Task<object> GetValueAsync(string key);
 
         void SetValue(string key);
 

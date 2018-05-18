@@ -8,7 +8,7 @@ using Common.Extensions;
 
 namespace Core.CacheManager.Concrete
 {
-    public class RedisCacheManager<T> : ICacheManager<T>
+    public class RedisCacheManager : ICacheManager
     {
         private static IDatabase _database;
 
@@ -18,16 +18,14 @@ namespace Core.CacheManager.Concrete
 
             _database = connection.GetDatabase();
         }
-        public T GetValue(string key)
+        public object GetValue(string key)
         {
-            var res = _database.StringGet(key);
-            return _database.StringGet(key).ConvertValue<T>();
+            return _database.StringGet(key);
         }
 
-        public async Task<T> GetValueAsync(string key)
+        public async Task<object> GetValueAsync(string key)
         {
-            return (await _database.StringGetAsync(key)).ConvertValue<T>();
-
+            return (await _database.StringGetAsync(key));
         }
 
         public void SetValue(string key)

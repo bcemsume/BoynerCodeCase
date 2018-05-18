@@ -29,7 +29,7 @@ namespace Reader
             _container = new Container();
 
             _container.Register<IConfigDal, MongoConfigDal>();
-            _container.Register<ICacheManager<string>, RedisCacheManager<string>>();
+            _container.Register<ICacheManager, RedisCacheManager>();
             _container.Register<IMessageBroker, RabbitMQMessageBroker>();
             _container.Verify();
         }
@@ -37,7 +37,7 @@ namespace Reader
 
         public T GetValue<T>(string key)
         {
-            var redis = _container.GetInstance<ICacheManager<string>>();
+            var redis = _container.GetInstance<ICacheManager>();
 
             redis.SetValue("test123123");
 
