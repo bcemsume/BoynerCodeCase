@@ -28,14 +28,14 @@ namespace Core.CacheManager.Concrete
             return (await _database.StringGetAsync(key));
         }
 
-        public void SetValue(string value)
+        public void SetValue(string key, string value)
         {
-            _database.StringSet("test", value);
+            _database.StringSet(key, value);
         }
 
-        public Task SetValueAsync(string value)
+        public async Task SetValueAsync(string key, string value)
         {
-            throw new NotImplementedException();
+            await _database.StringSetAsync(key, value);
         }
     }
 }

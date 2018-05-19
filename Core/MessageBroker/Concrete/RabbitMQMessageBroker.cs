@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Core.MessageBroker.Concrete
@@ -28,7 +29,7 @@ namespace Core.MessageBroker.Concrete
                         var body = ea.Body;
                         var message = Encoding.UTF8.GetString(body);
 
-                        Console.WriteLine("{0} isimli queue üzerinden gelen mesaj: \"{1}\"", queueName, message);
+                        Debug.WriteLine("{0} isimli queue üzerinden gelen mesaj: \"{1}\"", queueName, message);
                     };
 
                     channel.BasicConsume(queueName, true, consumer);
@@ -46,7 +47,7 @@ namespace Core.MessageBroker.Concrete
 
                     channel.BasicPublish("", queueName, null, Encoding.UTF8.GetBytes(message));
 
-                    Console.WriteLine("{0} queue'su üzerine, \"{1}\" mesajı yazıldı.", queueName, message);
+                    Debug.WriteLine("{0} queue'su üzerine, \"{1}\" mesajı yazıldı.", queueName, message);
                 }
             }
         }

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using SimpleInjector;
 using Core.MessageBroker.Abstract;
 using Core.MessageBroker.Concrete;
+using Core.CacheManager.Abstract;
+using Core.CacheManager.Concrete;
 
 namespace Test
 {
@@ -21,7 +23,8 @@ namespace Test
         const bool IsActive = false;
         const string ApplicationName = "SERVICE-A";
 
-
+        const string MQTestPublishMessage = "test message";
+        const string MQTestPublishQueueName = "test";
 
         public Test()
         {
@@ -69,6 +72,67 @@ namespace Test
         }
 
         [TestMethod]
+        public void RediSetKeyTest()
+        {
+            var container = new Container();
+            container.Register<ICacheManager, RedisCacheManager>();
+
+            container.Verify();
+
+            var cacheManager = container.GetInstance<ICacheManager>();
+
+            cacheManager.SetValue(Name, Value);
+
+        }
+
+        [TestMethod]
+        public async Task RediSetKeyTestAsync()
+        {
+            var container = new Container();
+            container.Register<ICacheManager, RedisCacheManager>();
+
+            container.Verify();
+
+            var cacheManager = container.GetInstance<ICacheManager>();
+
+            await cacheManager.SetValueAsync(Name, Value);
+
+        }
+
+
+        [TestMethod]
+        public void RedisGetValueTest()
+        {
+            var container = new Container();
+            container.Register<ICacheManager, RedisCacheManager>();
+
+            container.Verify();
+
+            var cacheManager = container.GetInstance<ICacheManager>();
+
+            var value = cacheManager.GetValue(Name);
+
+            Assert.IsTrue(value.ToString() == Value);
+
+        }
+
+        [TestMethod]
+        public async Task RedisGetValueTestAsync()
+        {
+            var container = new Container();
+            container.Register<ICacheManager, RedisCacheManager>();
+
+            container.Verify();
+
+            var cacheManager = container.GetInstance<ICacheManager>();
+
+            var value = await cacheManager.GetValueAsync(Name);
+
+            Assert.IsTrue(value.ToString() == Value);
+
+        }
+
+        [TestMethod]
         public void ReaderTest()
         {
             var reader = new ConfigurationReader("", "", 1);
@@ -86,8 +150,21 @@ namespace Test
 
             var messageBroker = container.GetInstance<IMessageBroker>();
 
-            messageBroker.Publisher("test", "mesaj");
+            messageBroker.Publisher(MQTestPublishQueueName, MQTestPublishMessage);
 
+        }
+
+        [TestMethod]
+        public void MQConsumerTest()
+        {
+            var container = new Container();
+            container.Register<IMessageBroker, RabbitMQMessageBroker>();
+
+            container.Verify();
+
+            var messageBroker = container.GetInstance<IMessageBroker>();
+
+            messageBroker.Consumer(MQTestPublishQueueName);
         }
     }
 }

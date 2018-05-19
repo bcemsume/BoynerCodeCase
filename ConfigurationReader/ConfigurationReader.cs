@@ -26,6 +26,11 @@ namespace Reader
             _connectionString = connectionString;
             _refreshTimerIntervalInMs = refreshTimerIntervalInMs;
 
+            
+        }
+
+        public void Initialize()
+        {
             _container = new Container();
 
             _container.Register<IConfigDal, MongoConfigDal>();
@@ -37,11 +42,9 @@ namespace Reader
 
         public T GetValue<T>(string key)
         {
-            var redis = _container.GetInstance<ICacheManager>();
+            var cacheManager = _container.GetInstance<ICacheManager>();
 
-            redis.SetValue("test123123");
-
-            var value = redis.GetValue("test");
+            var value = cacheManager.GetValue(key);
 
             return value.Conversion<T>();
         }
